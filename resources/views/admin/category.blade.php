@@ -28,7 +28,7 @@
       width: 50%;
       text-align: center;
       margin-top: 40px;
-      border: 3px solid #E94D09;
+      border: 2px solid #E94D09;
     }
     </style>
   </head>
