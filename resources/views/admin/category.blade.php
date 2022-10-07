@@ -22,6 +22,14 @@
     {
       color: black;
     }
+
+    .center {
+      margin: auto;
+      width: 50%;
+      text-align: center;
+      margin-top: 40px;
+      border: 3px solid #E94D09;
+    }
     </style>
   </head>
   <body>
@@ -44,6 +52,17 @@
           </div>
 
             @endif
+
+            @if(session()->has('delete'))
+
+            <div class="alert alert-danger">
+
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+              {{ session()->get('delete') }}
+
+            </div>
+
+              @endif
           <div class="div-center">
             <h2 class="h2-font">Add Category</h2>
 
@@ -55,6 +74,22 @@
               <input type="submit" class="btn btn-primary" name="submit" value="Add Category">
             </form>
           </div>
+
+          <table class="center">
+            <tr>
+              <td>Category Name</td>
+              <td>Action</td>
+            </tr>
+
+            @foreach($data as $data)
+
+            <tr>
+              <td>{{ $data->category_name }}</td>
+              <td><a onclick="return confirm('Are you sure you want to delete this?')" class="btn btn-danger" href="{{ url('delete_category', $data->id) }}">Delete</a></td>
+            </tr>
+
+            @endforeach
+          </table>
         </div>
       </div>
     <!-- plugins:js -->
