@@ -47,6 +47,16 @@
       @include('admin.header')
       <div class="main-panel">
         <div class="content-wrapper">
+          @if(session()->has('delete'))
+
+          <div class="alert alert-danger">
+
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+            {{ session()->get('delete') }}
+
+          </div>
+
+            @endif
           <h2 class="h2-font">All Products</h2>
           <table class="center">
             <tr class="th-color">
@@ -57,6 +67,8 @@
             <th class="th-design">Price</th>
             <th class="th-design">Discount Price</th>
             <th class="th-design">Product Image</th>
+            <th class="th-design">Edit</th>
+            <th class="th-design">Delete</th>
             </tr>
 
             @foreach($product as $product)
@@ -71,6 +83,8 @@
               <td>
                 <img class="img-size" src="/product/{{ $product->image }}" alt="">
               </td>
+              <td><a class="btn btn-success" href="{{ url('update_product', $product->id) }}">Edit</a></td>
+              <td><a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')" href="{{ url('delete_product', $product->id) }}">Delete</a></td>
             </tr>
 
             @endforeach
