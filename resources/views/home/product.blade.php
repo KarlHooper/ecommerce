@@ -32,7 +32,7 @@
                   </div>
                </div>
                <div class="img-box">
-                  <img src="product/{{ $products->image }}">
+                  <img src="/product/{{ $products->image }}">
                </div>
                <div class="detail-box">
                   <h5>
