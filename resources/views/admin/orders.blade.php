@@ -24,8 +24,12 @@
       }
 
       .image-size {
-        width: 200px;
+        width: 150px;
         height: 100px;
+      }
+
+      td, th {
+        text-align: center;
       }
 
 
@@ -63,6 +67,7 @@
               <th style="padding: 10px;">Delivery Status</th>
               <th style="padding: 10px;">Image</th>
               <th style="padding: 10px;">Delivered</th>
+              <th style="padding: 10px;">Print PDF</th>
             </tr>
 
             @foreach($order as $order)
@@ -86,9 +91,12 @@
                   <a onclick="return confirm('Are you sure this product is delivered?')" href="{{ url('delivered', $order->id) }}" class="btn btn-primary">Delivered</a>
                @else
 
-               <p style="color: green;">Delivered</p>
+               <p style="color: green; text-align: center;">Delivered</p>
 
                 @endif
+              </td>
+              <td>
+                <a href="{{ url('print_pdf', $order->id) }}" class="btn btn-secondary">Print PDF</a>
               </td>
             </tr>
 
