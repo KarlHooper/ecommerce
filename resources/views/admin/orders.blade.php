@@ -15,7 +15,7 @@
       .table-design {
         border: 1px solid #fff;
         margin: auto;
-        width: 100%;
+        width: 70%;
         margin-top: 30px;
       }
 
@@ -24,7 +24,7 @@
       }
 
       .image-size {
-        width: 150px;
+        width: 100px;
         height: 100px;
       }
 
@@ -67,6 +67,7 @@
               <th style="padding: 10px;">Delivery Status</th>
               <th style="padding: 10px;">Image</th>
               <th style="padding: 10px;">Delivered</th>
+              <th style="padding: 10px;">Send Email</th>
               <th style="padding: 10px;">Print PDF</th>
             </tr>
 
@@ -96,8 +97,12 @@
                 @endif
               </td>
               <td>
+                <a href="{{ url('send_email', $order->id) }}" class="btn btn-info">Send Email</a>
+              </td>
+              <td>
                 <a href="{{ url('print_pdf', $order->id) }}" class="btn btn-secondary">Print PDF</a>
               </td>
+
             </tr>
 
             @endforeach

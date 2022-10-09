@@ -12,6 +12,10 @@ use App\Models\Order;
 
 use PDF;
 
+use Notification;
+
+use App\Notifications\MyFirstNotification;
+
 class AdminController extends Controller
 {
     public function view_category()
@@ -151,6 +155,35 @@ class AdminController extends Controller
       $pdf = PDF::loadView('admin.pdf', compact('order'));
 
       return $pdf->download('order_details.pdf');
+
+    }
+
+    public function send_email($id)
+    {
+
+      $order = order::find($id);
+
+      return view('admin.email_info', compact('order'));
+
+    }
+
+    public function send_user_email(Request $request, $id)
+    {
+
+      $order = order::find($id);
+
+      $details = [
+        'greeting'=>$request->greeting,
+        'firstline'=>$request->firstline,
+        'body'=>$request->body,
+        'button'=>$request->button,
+        'url'=>$request->url,
+        'lastline'=>$request->lastline,
+      ];
+
+      Notification::send($order, new MyFirstNotification($details));
+
+      return redirect()->back()->with('message', 'Email has been sent successfully!');
 
     }
 
