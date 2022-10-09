@@ -55,6 +55,8 @@ route::get('/send_email/{id}', [AdminController::class, 'send_email']);
 
 route::get('/delivered/{id}', [AdminController::class, 'delivered']);
 
+route::get('/search', [AdminController::class, 'searchdata']);
+
 route::get('/print_pdf/{id}', [AdminController::class, 'print_pdf']);
 
 route::post('/send_user_email/{id}', [AdminController::class, 'send_user_email']);
