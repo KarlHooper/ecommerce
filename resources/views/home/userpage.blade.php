@@ -41,7 +41,9 @@
       <!-- product section -->
       @include('home.product')
       <!-- end product section -->
-
+      <!-- comment section -->
+      @include('home.comment')
+      <!-- end comment section -->
       <!-- subscribe section -->
       @include('home.subscribe')
       <!-- end subscribe section -->
@@ -56,6 +58,40 @@
 
          </p>
       </div>
+      <script type="text/javascript">
+
+        function reply(caller)
+        {
+
+          document.getElementById('commentId').value = $(caller).attr('data-CommentId');
+
+          $('.replyDiv').insertAfter($(caller));
+
+          $('.replyDiv').show();
+
+        }
+
+        function reply_close(caller)
+        {
+
+          $('.replyDiv').hide();
+
+        }
+
+      </script>
+
+      <script>
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+        
+    </script>
       <!-- jQery -->
       <script src="home/js/jquery-3.4.1.min.js"></script>
       <!-- popper js -->
