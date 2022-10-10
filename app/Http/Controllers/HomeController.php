@@ -22,6 +22,8 @@ use Session;
 
 use Stripe;
 
+use RealRashid\SweetAlert\Facades\Alert;
+
 class HomeController extends Controller
 {
 
@@ -117,7 +119,9 @@ class HomeController extends Controller
 
           $cart->save();
 
-          return redirect()->back()->with('message', 'Product added successfully!');
+          Alert::success('Product added successfully!', 'We have added product to the cart');
+
+          return redirect()->back();
 
         } else {
 
@@ -142,7 +146,9 @@ class HomeController extends Controller
           $cart->quantity = $request->quantity;
           $cart->save();
 
-          return redirect()->back()->with('message', 'Product added successfully!');
+          Alert::success('Product added successfully!', 'We have added product to the cart');
+
+          return redirect()->back();
 
         }
 
