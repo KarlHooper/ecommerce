@@ -28,8 +28,9 @@
                <li class="nav-item">
                   <a class="nav-link" href="{{ url('show_cart') }}">Cart</a>
                </li>
-               <form class="form-inline">
-                  <button class="btn my-sm-0 nav_search-btn" type="submit">
+               <form action="{{ url('product_search') }}" method="get" class="form-inline align-items-center"  style="display: inline-block">
+                 <input type="text" style="width: 150px;" name="search" placeholder="Search...">
+                  <button class="btn my-sm-0 nav_search-btn" type="submit" name=>
                   <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                </form>
