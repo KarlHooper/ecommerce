@@ -10,6 +10,8 @@ use App\Models\Product;
 
 use App\Models\Order;
 
+use Illuminate\Support\Facades\Auth;
+
 use PDF;
 
 use Notification;
@@ -20,181 +22,332 @@ class AdminController extends Controller
 {
     public function view_category()
     {
-      $data = category::all();
-      return view('admin.category', compact('data'));
+      if(Auth::id())
+      {
+
+        $data = category::all();
+        return view('admin.category', compact('data'));
+
+      } else {
+
+        return redirect('login');
+
+      }
+
     }
 
     public function add_category(Request $request)
     {
-      $data = new category;
 
-      $data->category_name = $request->category;
+      if(Auth::id())
+      {
 
-      $data->save();
+        $data = new category;
 
-      return redirect()->back()->with('message', 'Category added successfully!');
+        $data->category_name = $request->category;
+
+        $data->save();
+
+        return redirect()->back()->with('message', 'Category added successfully!');
+
+      } else {
+
+        return redirect('login');
+
+      }
+
     }
 
     public function delete_category($id)
     {
-      $data = category::find($id);
 
-      $data->delete();
+      if(Auth::id())
+      {
 
-      return redirect()->back()->with('delete', 'Category deleted successfully!');
+        $data = category::find($id);
+
+        $data->delete();
+
+        return redirect()->back()->with('delete', 'Category deleted successfully!');
+
+      } else {
+
+        return redirect('login');
+
+      }
+
     }
 
     public function add_product()
     {
-      $category = category::all();
-      return view('admin.product', compact('category'));
+
+      if(Auth::id())
+      {
+
+        $category = category::all();
+        return view('admin.product', compact('category'));
+
+      } else {
+
+        return redirect('login');
+
+      }
+
     }
 
     public function new_product(Request $request)
     {
-      $product = new product;
 
-      $product->title = $request->title;
-      $product->description = $request->description;
-      $product->price = $request->price;
-      $product->quantity = $request->quantity;
-      $product->discount_price = $request->discount_price;
-      $product->category = $request->category;
+      if(Auth::id())
+      {
 
-      $image = $request->image;
-      $imagename = time().'.'.$image->getClientOriginalExtension();
-      $request->image->move('product', $imagename);
-      $product->image = $imagename;
-      $product->save();
+        $product = new product;
 
-      return redirect()->back()->with('message', 'Product added successfully!');
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->discount_price = $request->discount_price;
+        $product->category = $request->category;
+
+        $image = $request->image;
+        $imagename = time().'.'.$image->getClientOriginalExtension();
+        $request->image->move('product', $imagename);
+        $product->image = $imagename;
+        $product->save();
+
+        return redirect()->back()->with('message', 'Product added successfully!');
+
+      } else {
+
+        return redirect('login');
+
+      }
+
     }
 
     public function view_products()
     {
-      $product = product::all();
-      return view('admin.view_products', compact('product'));
+
+      if(Auth::id())
+      {
+
+        $product = product::all();
+
+        return view('admin.view_products', compact('product'));
+
+      } else {
+
+        return redirect('login');
+
+      }
+
     }
 
     public function delete_product($id)
     {
-      $product = product::find($id);
 
-      $product->delete();
+      if(Auth::id())
+      {
 
-      return redirect()->back()->with('delete', 'Product deleted successfully!');
+        $product = product::find($id);
+
+        $product->delete();
+
+        return redirect()->back()->with('delete', 'Product deleted successfully!');
+
+      } else {
+
+        return redirect('login');
+
+      }
+
     }
 
     public function update_product($id)
     {
 
-      $product = product::find($id);
+      if(Auth::id())
+      {
 
-      $category = category::all();
+        $product = product::find($id);
 
-      return view('admin.update_product', compact('product', 'category'));
+        $category = category::all();
+
+        return view('admin.update_product', compact('product', 'category'));
+
+      } else {
+
+        return redirect('login');
+
+      }
 
     }
 
     public function update_product_confirm(Request $request, $id)
     {
 
-      $product = product::find($id);
-
-      $product->title = $request->title;
-      $product->description = $request->description;
-      $product->price = $request->price;
-      $product->quantity = $request->quantity;
-      $product->discount_price = $request->discount_price;
-      $product->category = $request->category;
-
-      $image = $request->image;
-      if($image)
+      if(Auth::id())
       {
 
-      $imagename = time().'.'.$image->getClientOriginalExtension();
-      $request->image->move('product', $imagename);
-      $product->image = $imagename;
+        $product = product::find($id);
+
+        $product->title = $request->title;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->discount_price = $request->discount_price;
+        $product->category = $request->category;
+
+        $image = $request->image;
+        if($image)
+        {
+
+        $imagename = time().'.'.$image->getClientOriginalExtension();
+        $request->image->move('product', $imagename);
+        $product->image = $imagename;
+
+        }
+        $product->save();
+
+        return redirect()->back()->with('message', 'Product updated successfully!');
+
+      } else {
+
+        return redirect('login');
 
       }
-      $product->save();
 
-      return redirect()->back()->with('message', 'Product updated successfully!');
 
     }
 
     public function orders()
     {
 
-      $order = order::all();
+      if(Auth::id())
+      {
 
-      return view('admin.orders', compact('order'));
+        $order = order::all();
+
+        return view('admin.orders', compact('order'));
+
+      } else {
+
+        return redirect('login');
+
+      }
+
 
     }
 
     public function delivered($id)
     {
 
-      $order = order::find($id);
+      if(Auth::id())
+      {
+        $order = order::find($id);
 
-      $order->delivery_status = "delivered";
+        $order->delivery_status = "delivered";
 
-      $order->payment_status = "paid";
+        $order->payment_status = "paid";
 
-      $order->save();
+        $order->save();
 
-      return redirect()->back()->with('message', 'Product delivered successfully!');
+        return redirect()->back()->with('message', 'Product delivered successfully!');
+
+      } else {
+
+        return redirect('login');
+
+      }
 
     }
 
     public function print_pdf($id)
     {
 
-      $order = order::find($id);
+      if(Auth::id())
+      {
 
-      $pdf = PDF::loadView('admin.pdf', compact('order'));
+        $order = order::find($id);
 
-      return $pdf->download('order_details.pdf');
+        $pdf = PDF::loadView('admin.pdf', compact('order'));
+
+        return $pdf->download('order_details.pdf');
+
+      } else {
+
+        return redirect('login');
+
+      }
+
 
     }
 
     public function send_email($id)
     {
 
-      $order = order::find($id);
+      if(Auth::id())
+      {
 
-      return view('admin.email_info', compact('order'));
+        $order = order::find($id);
+
+        return view('admin.email_info', compact('order'));
+
+      } else {
+
+        return redirect('login');
+
+      }
 
     }
 
     public function send_user_email(Request $request, $id)
     {
 
-      $order = order::find($id);
+      if(Auth::id())
+      {
 
-      $details = [
-        'greeting'=>$request->greeting,
-        'firstline'=>$request->firstline,
-        'body'=>$request->body,
-        'button'=>$request->button,
-        'url'=>$request->url,
-        'lastline'=>$request->lastline,
-      ];
+        $order = order::find($id);
 
-      Notification::send($order, new MyFirstNotification($details));
+        $details = [
+          'greeting'=>$request->greeting,
+          'firstline'=>$request->firstline,
+          'body'=>$request->body,
+          'button'=>$request->button,
+          'url'=>$request->url,
+          'lastline'=>$request->lastline,
+        ];
 
-      return redirect()->back()->with('message', 'Email has been sent successfully!');
+        Notification::send($order, new MyFirstNotification($details));
+
+        return redirect()->back()->with('message', 'Email has been sent successfully!');
+
+      } else {
+
+        return redirect('login');
+
+      }
 
     }
 
     public function searchdata(Request $request)
     {
 
+      if(Auth::id())
+      {
+
         $searchText = $request->search;
 
         $order = order::where('name', 'LIKE', "%$searchText%")->orWhere('phone', 'LIKE', "%$searchText%")->orWhere('product_title', 'LIKE', "%$searchText%")->get();
 
         return view('admin.orders', compact('order'));
+
+      } else {
+
+        return redirect('login');
+
+      }
 
     }
 

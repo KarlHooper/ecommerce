@@ -2,8 +2,17 @@
    <div class="container">
       <div class="heading_container heading_center">
          <h2>
-            Our <span>products</span>
+            All <span>products</span>
          </h2>
+      </div>
+      <div class="" style="margin: auto;">
+        <form action="{{ url('search_product') }}" method="get">
+          @csrf
+
+          <input style="width: 500px;" type="text" name="search" placeholder="Search for a product...">
+          <input type="submit" value="Search">
+
+        </form>
       </div>
       @if(session()->has('message'))
 
